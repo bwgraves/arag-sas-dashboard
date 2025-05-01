@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ARAG Bacteria Monitoring</title>
+        <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Avonvale River Action Group Bacteria Watch 🚣🏻‍♂️</h1>
+                <p>Last refreshed just now</p>
+            </header>
+            
+            <h2>About this dashboard</h2>
+            <p>
+                This dashboard presents bacterial monitoring data from Faldbury and Eckington, highlighting trends in water quality across both locations. The charts display key metrics used to assess potential risks to public health and the environment.
+            </p>
+            <p>
+                Bacteria are microscopic organisms found naturally in lakes, rivers, and streams. While most are harmless, some can indicate contamination or pose a risk to humans and wildlife. Coliform bacteria, including E. coli, are commonly used as indicators of water pollution, especially from animal or human waste. Elevated levels of these bacteria may suggest recent contamination from sources such as livestock, pets, or sewage.
+            </p>
+            <p>
+                Monitoring these levels helps scientists and public health officials track changes over time and identify areas where further investigation or action may be needed.
+            </p>
+
+            <p>For more information or to report any pollution incidents visit <a href="https://avonvaleriver.org/">the Avon Vale River Action group website.</a></p>
+
+            <section>
+                <h2>Eckington</h2>
+                <p>A brief description of where the location is.</p>
+                <div class="row">
+                    <div class="col">
+                        <div class="chart">
+                            <h3>E-Coli</h3>
+                            <canvas data-ecoli></canvas>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="chart">
+                            <h3>Coliforms</h3>
+                            <canvas data-coliforms></canvas>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="chart">
+                            <h3>Enterococci</h3>
+                            <canvas data-enterocci></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2>Fladbury</h2>
+                <p>A brief description of where the location is.</p>
+                <div class="row">
+                    <div class="col">
+                        <div class="chart">
+                            <h3>E-Coli</h3>
+                            <canvas data-ecoli></canvas>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="chart">
+                            <h3>Coliforms</h3>
+                            <canvas data-coliforms></canvas>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="chart">
+                            <h3>Enterococci</h3>
+                            <canvas data-enterocci></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ecoliCharts = document.querySelectorAll("[data-ecoli]");
+            ecoliCharts.forEach(el => {
+                new Chart(el, {
+                    type: 'bar',
+                    data: {
+                        labels: ['20/04/2025', '20/05/2025', '20/06/2025', '20/07/2025', '20/08/2025'],
+                        datasets: [{
+                            label: 'E-Coli CFU/100ml',
+                            data: [30, 19, 3, 5, 2, 3],
+                            borderWidth: 1,
+                            backgroundColor: "#EE5D9F"
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        borderRadius: 4,
+                        plugins: {
+                            legend: {
+                                display:false,
+                            }
+                        }
+                    }
+                });
+            });
+
+            const coliformsCharts = document.querySelectorAll("[data-coliforms]");
+            coliformsCharts.forEach(el => {
+                new Chart(el, {
+                    type: 'bar',
+                    data: {
+                        labels: ['20/04/2025', '20/05/2025', '20/06/2025', '20/07/2025', '20/08/2025'],
+                        datasets: [{
+                            label: 'Coliforms CFU/100ml',
+                            data: [1150, 800, 1500, 950, 975, 1000],
+                            borderWidth: 1,
+                            backgroundColor: "#5B8DEF"
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        borderRadius: 4,
+                        plugins: {
+                            legend: {
+                                display:false,
+                            },
+                        }
+                    }
+                });
+            });
+
+            const enterocciCharts = document.querySelectorAll("[data-enterocci]");
+            enterocciCharts.forEach(el => {
+                new Chart(el, {
+                    type: 'bar',
+                    data: {
+                        labels: ['20/04/2025', '20/05/2025', '20/06/2025', '20/07/2025', '20/08/2025'],
+                        datasets: [{
+                            label: 'Enterococci CFU/100ml',
+                            data: [1150, 1900, 1000, 560, 2322, 232],
+                            borderWidth: 1,
+                            backgroundColor: "#6EDCB4"
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        borderRadius: 4,
+                        plugins: {
+                            legend: {
+                                display:false,
+                            },
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

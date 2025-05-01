@@ -1,0 +1,46 @@
+:root {
+    --grid-maxWidth: 180rem;
+    --color-primary: #0097B2;
+  }
+
+
+body {
+    color:#333;
+    border-top:5px solid #23B8EC;
+    margin:0;
+}
+
+
+p {
+    color: #444;
+}
+
+header {
+    margin:4vh 0;
+}
+
+header h1 {
+    margin-bottom:0;
+}
+
+header p {
+    margin-top:6px;
+    font-size:90%;
+}
+
+section {
+    margin:50px 0;
+}
+
+.chart {
+    border-radius:3px;
+}
+
+canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.mt-0 {
+    margin-top:0;
+}
