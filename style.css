@@ -32,8 +32,22 @@ section {
     margin:50px 0;
 }
 
+section h2 {
+    margin:0;
+}
+
+section p {
+    margin-top:0;
+}
+
 .chart {
     border-radius:3px;
+    border:1px solid #eee;
+    padding:10px;
+}
+
+.chart h3 {
+    margin-top:0;
 }
 
 canvas {
@@ -43,4 +57,14 @@ canvas {
 
 .mt-0 {
     margin-top:0;
+}
+
+
+.row {
+    margin-bottom: 2rem;
+}
+
+section h2 {
+    font-weight:600;
+    color: #0077a3;
 }
