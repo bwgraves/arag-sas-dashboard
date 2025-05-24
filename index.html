@@ -154,7 +154,8 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-        const belowThreshold = 9;
+          const belowThreshold = 9;
+          const aboveThreshold = 1001;
 
           const bacteriaData = {
             'Eckington': {
@@ -185,9 +186,23 @@
             const siteData = bacteriaData[siteName];
 
             if (siteData) {
-              row.cells[1].textContent = siteData.ecoli[0] === belowThreshold ? '<10' : siteData.ecoli[0] ?? '-';
-              row.cells[2].textContent = siteData.coliforms[0] === belowThreshold ? '<10' : siteData.coliforms[0] ?? '-';
-              row.cells[3].textContent = siteData.enterococci[0] === belowThreshold ? '<10' : siteData.enterococci[0] ?? '-';
+              row.cells[1].textContent = siteData.ecoli[0] === belowThreshold
+                ? '<10'
+                : siteData.ecoli[0] === aboveThreshold
+                  ? '>1000'
+                  : siteData.ecoli[0] ?? '-';
+
+              row.cells[2].textContent = siteData.coliforms[0] === belowThreshold
+                ? '<10'
+                : siteData.coliforms[0] === aboveThreshold
+                  ? '>1000'
+                  : siteData.coliforms[0] ?? '-';
+
+              row.cells[3].textContent = siteData.enterococci[0] === belowThreshold
+                ? '<10'
+                : siteData.enterococci[0] === aboveThreshold
+                  ? '>1000'
+                  : siteData.enterococci[0] ?? '-';
             } else {
               // If site not found in data
               row.cells[1].textContent = '-';
