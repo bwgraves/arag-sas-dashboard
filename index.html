@@ -8,40 +8,84 @@
         <link href="style.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
+      <header>
         <div class="container">
-            <header>
-                <h1>Avonvale River Action Group Bacteria Watch 🚣🏻‍♂️</h1>
-                <p>Last refreshed just now</p>
-            </header>
-            
-            <h2>About this dashboard</h2>
-            <p>This dashboard presents bacterial monitoring data from <strong>Eckington</strong>, <strong>Fladbury</strong>, and <strong>Bidford</strong>. The charts display key metrics used to assess potential risks to public health and the environment.</p>
+          <h1>Avonvale River Action Group Bacteria Watch 🚣🏻‍♂️</h1>
+        </div>
+      </header>
+        <div class="container">
+            <div class="row">
+              <div class="col">
+                <div class="dashboard-card">
+                  <h2>About this dashboard</h2>
+                  <p>This dashboard presents bacterial monitoring data from <strong>Eckington</strong>, <strong>Fladbury</strong>, and <strong>Bidford</strong>. The charts display key metrics used to assess potential risks to public health and the environment.</p>
 
-            <p>Bacteria are microscopic organisms found naturally in lakes, rivers, and streams. While most are harmless, some can indicate contamination or pose a risk to humans and wildlife. <strong>Coliform bacteria</strong>, including <em>E. coli</em>, are commonly used as indicators of water pollution, especially from animal or human waste. Elevated levels of these bacteria may suggest recent contamination from sources such as livestock, pets, or sewage.</p>
+                  <p>Bacteria are microscopic organisms found naturally in lakes, rivers, and streams. While most are harmless, some can indicate contamination or pose a risk to humans and wildlife. <strong>Coliform bacteria</strong>, including <em>E. coli</em>, are commonly used as indicators of water pollution, especially from animal or human waste. Elevated levels of these bacteria may suggest recent contamination from sources such as livestock, pets, or sewage.</p>
 
-            <p>The results are from a professional lab. A standard amount of sample is put on an agar plate (bacterial food) and grown for a set period of time. The number of colonies (dots of bacteria) seen are counted — this is the <strong>cfu</strong> ("colony forming units") count given. Environment Agency ratings consider <em>E. coli</em> &lt; 500 cfu and coliforms &lt; 200 cfu as excellent.</p>
+                  <p>The results are from a professional lab. A standard amount of sample is put on an agar plate (bacterial food) and grown for a set period of time. The number of colonies (dots of bacteria) seen are counted — this is the <strong>cfu</strong> ("colony forming units") count given. Environment Agency ratings consider <em>E. coli</em> &lt; 500 cfu and coliforms &lt; 200 cfu as excellent.</p>
 
-            <p>Monitoring these levels helps scientists and public health officials track changes over time and identify areas where further investigation or action may be needed. Given that they are historic measurements, they should not be used as an indication of whether it is safe to (say) swim or not.</p>
-
-            <p>For more information or to report any pollution incidents, visit the <a href="https://avonvaleriver.org/" target="_blank" rel="noopener">Avon Vale River Action group website</a>.</p>
+                  <p>Monitoring these levels helps scientists and public health officials track changes over time and identify areas where further investigation or action may be needed. Given that they are historic measurements, they should not be used as an indication of whether it is safe to (say) swim or not.</p>
+                
+                  <p>For more information or to report any pollution incidents, visit the <a href="https://avonvaleriver.org/" target="_blank">Avon Vale River Action group website</a>.</p>
+                </div>
+              </div>
+              <div class="col">
+                <div class="dashboard-card">
+                  <h2>Latest data - 19th May 2025</h2>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Site</th>
+                        <th>E-Coli</th>
+                        <th>Coliforms</th>
+                        <th>Enterococci</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Eckington</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>Fladbury</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>Bidford</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!--<div class="chart-key">
+                    <span class="colour"></span>
+                  </div>-->
+                </div>
+              </div>
+            </div>
             <section>
                 <h2>Eckington</h2>
                 <p>Sampled downstream of Eckington Bridge</p>
                 <div class="row">
                     <div class="col">
-                        <div class="chart">
+                        <div class="chart dashboard-card">
                             <h3>E-Coli</h3>
                             <canvas data-ecoli data-location="Eckington"></canvas>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="chart">
+                        <div class="chart dashboard-card">
                             <h3>Coliforms</h3>
                             <canvas data-coliforms data-location="Eckington"></canvas>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="chart">
+                        <div class="chart dashboard-card">
                             <h3>Enterococci</h3>
                             <canvas data-enterocci data-location="Eckington"></canvas>
                         </div>
@@ -53,19 +97,19 @@
                 <p>Sampled just above Fladbury Mill</p>
                 <div class="row">
                     <div class="col">
-                        <div class="chart">
+                        <div class="chart dashboard-card">
                             <h3>E-Coli</h3>
                             <canvas data-ecoli data-location="Fladbury"></canvas>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="chart">
+                        <div class="chart dashboard-card">
                             <h3>Coliforms</h3>
                             <canvas data-coliforms data-location="Fladbury"></canvas>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="chart">
+                        <div class="chart dashboard-card">
                             <h3>Enterococci</h3>
                             <canvas data-enterocci data-location="Fladbury"></canvas>
                         </div>
@@ -77,19 +121,19 @@
                 <p>Sampled downstream at Marcliff</p>
                 <div class="row">
                     <div class="col">
-                        <div class="chart">
+                        <div class="chart dashboard-card">
                             <h3>E-Coli</h3>
                             <canvas data-ecoli data-location="Bidford"></canvas>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="chart">
+                        <div class="chart dashboard-card">
                             <h3>Coliforms</h3>
                             <canvas data-coliforms data-location="Bidford"></canvas>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="chart">
+                        <div class="chart dashboard-card">
                             <h3>Enterococci</h3>
                             <canvas data-enterocci data-location="Bidford"></canvas>
                         </div>
@@ -102,23 +146,43 @@
           const bacteriaData = {
             'Eckington': {
               labels: ['19/05/2025'],
-              ecoli:    [9],
-              coliforms:[9],
+              ecoli: [9],
+              coliforms: [9],
               enterococci: [60]
             },
             'Fladbury': {
-              labels: ['28/04/2025', '19/05/2025'],
-              ecoli:    [400, 530],
-              coliforms:[1150, 1001],
-              enterococci: [30, 9]
+              labels: ['19/05/2025', '28/04/2025'],
+              ecoli: [530, 400],
+              coliforms: [1001, 1150],
+              enterococci: [9, 30]
             },
             'Bidford': {
               labels: ['19/05/2025'],
-              ecoli:    [40],
-              coliforms:[270],
+              ecoli: [40],
+              coliforms: [270],
               enterococci: [9]
             }
           };
+
+          document.addEventListener('DOMContentLoaded', () => {
+          const rows = document.querySelectorAll('table tbody tr');
+
+          rows.forEach(row => {
+            const siteName = row.cells[0].textContent.trim();
+            const siteData = bacteriaData[siteName];
+
+            if (siteData) {
+              row.cells[1].textContent = siteData.ecoli[0] ?? '-';
+              row.cells[2].textContent = siteData.coliforms[0] ?? '-';
+              row.cells[3].textContent = siteData.enterococci[0] ?? '-';
+            } else {
+              // If site not found in data
+              row.cells[1].textContent = '-';
+              row.cells[2].textContent = '-';
+              row.cells[3].textContent = '-';
+            }
+          });
+        });
         
           function renderCharts() {
             const chartConfigs = [

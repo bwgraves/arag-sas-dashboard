@@ -1,13 +1,13 @@
 :root {
     --grid-maxWidth: 180rem;
-    --color-primary: #0097B2;
+    --color-primary: #0077a3;
   }
 
 
 body {
     color:#333;
-    border-top:5px solid #23B8EC;
     margin:0;
+    background-color:#EFEFEE60
 }
 
 
@@ -16,15 +16,20 @@ p {
 }
 
 header {
-    margin:4vh 0;
+    background-color:white;
+    border-bottom:1px solid #eee;
+    padding:2rem 0;
+    margin-bottom:2rem;
 }
 
 header h1 {
     margin-bottom:0;
+    margin-top:0;
+    font-size:150%;
+    font-weight:700;
 }
 
 header p {
-    margin-top:6px;
     font-size:90%;
 }
 
@@ -66,5 +71,44 @@ canvas {
 
 section h2 {
     font-weight:600;
-    color: #0077a3;
+    color: var(--color-primary);
 }
+
+
+.dashboard-card {
+    border:1px solid #eee;
+    border-radius:6px;
+    background-color:white;
+    padding:1.25rem;
+
+    h2, h3 {
+        margin-top:0;
+        font-size:120%;
+        border-bottom:1px solid #eee;
+    }
+}
+
+table {
+    border: 1px solid #eee;
+  
+    th {
+      font-weight: 500;
+      padding: 0.5em;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    thead {
+        border-bottom:0;
+    }
+  
+    td {
+      padding: 0.5em;
+      border-bottom: 1px solid #eee;
+      border-right: 1px solid #eee;
+    }
+  
+    td:last-child {
+      border-right: none;
+    }
+  }
