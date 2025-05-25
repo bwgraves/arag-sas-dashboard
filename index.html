@@ -26,7 +26,14 @@
 
                   <p>Monitoring these levels helps scientists and public health officials track changes over time and identify areas where further investigation or action may be needed. Given that they are historic measurements, they should not be used as an indication of whether it is safe to (say) swim or not.</p>
                 
-                  <p>For more information or to report any pollution incidents, visit the <a href="https://avonvaleriver.org/" target="_blank">Avon Vale River Action group website</a>.</p>
+                </div>
+                <div class="dashboard-card">
+                  <h2>Useful Links</h2>
+                  <ul>
+                    <li><a href="https://avonvaleriver.org" target="_blank">Avonvale River Action Group website</a></li>
+                    <li><a href="https://mycloudbase.com/avonvale" target="_blank">Avonvale River Action Group monthly sampling results</a></li>
+                    <li><a href="https://smartsurvey.co.uk/s/avonalerts" target="_blank">Sign up to Avon sewage spill alerts</a></li>
+                  </ul>
                 </div>
               </div>
               <div class="col">
@@ -62,20 +69,25 @@
                       </tr>
                     </tbody>
                   </table>
-                  <!--<div class="chart-keys">
+                  <div class="chart-keys">
+                    <span class="chart-keys__header">Envrionmental Agency Classifcations - <a href="https://datahq.sas.org.uk/wp-content/uploads/2025/01/SAS-Citizen-Science-guidance-on-data-interpretation.pdf" target="_blank">See here for more details</a></span>
                     <div class="chart-keys__key">
-                      <span class="colour colour--bad"></span>
-                      <span>>500 dfdfdf</span>
+                      <span class="colour colour--excellent"></span>
+                      <span><strong>Excellent</strong> - E-Coli: ≤500, Enterococci: ≤200 cfu/100ml (95th percentile)</span>
                     </div>
                     <div class="chart-keys__key">
-                      <span class="colour colour--ok"></span>
-                      <span>>500 dfdfdf</span>
+                      <span class="colour colour--good"></span>
+                      <span><strong>Good</strong> - E-Coli: ≤1000, Enterococci: ≤400 cfu/100ml (95th percentile)</span>
                     </div>
                     <div class="chart-keys__key">
-                      <span class="colour colour--"></span>
-                      <span>>500 dfdfdf</span>
+                      <span class="colour colour--sufficient"></span>
+                      <span><strong>Sufficient</strong> - E-Coli: ≤900, Enterococci: ≤330 cfu/100ml (90th percentile)</span>
                     </div>
-                  </div>-->
+                    <div class="chart-keys__key">
+                      <span class="colour colour--poor"></span>
+                      <span><strong>Poor</strong> - Does not meet 'Sufficient' standard</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -203,15 +215,46 @@
                 : siteData.enterococci[0] === aboveThreshold
                   ? '>1000'
                   : siteData.enterococci[0] ?? '-';
-            } else {
-              // If site not found in data
-              row.cells[1].textContent = '-';
-              row.cells[2].textContent = '-';
-              row.cells[3].textContent = '-';
-            }
+
+              const classification = getClassification(siteData.ecoli[0], siteData.enterococci[0]);
+              row.classList.add(`colour--${classification}-light`);
+                
+              } else {
+                // If site not found in data
+                row.cells[1].textContent = '-';
+                row.cells[2].textContent = '-';
+                row.cells[3].textContent = '-';
+              }
+            });
           });
-        });
-        
+
+          function getClassification(ec, ie) {
+            // If either value is missing, classify as "poor"
+            if (ec == null || ie == null) return 'unknown';
+
+            const ecClass =
+              ec <= 500 ? 'excellent' :
+              ec <= 900 ? 'sufficient' :
+              ec <= 1000 ? 'good' :
+              'poor';
+
+            console.log("ex class", ec, ecClass)
+
+            const ieClass =
+              ie <= 200 ? 'excellent' :
+              ie <= 330 ? 'sufficient' :
+              ie <= 400 ? 'good' :
+              'poor';
+
+            console.log("ie class", ie, ieClass)
+
+            // Convert classification to a score to get the worst one
+            const rank = { 'excellent': 1, 'good': 2, 'sufficient': 3, 'poor': 4 };
+            const worst = rank[ecClass] > rank[ieClass] ? ecClass : ieClass;
+
+            return worst;
+          }
+      
           function renderCharts() {
             const chartConfigs = [
               { attr: "data-ecoli", key: "ecoli", label: "E-Coli CFU/100ml", color: "#EE5D9F" },
