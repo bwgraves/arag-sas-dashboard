@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>ARAG Bacteria Monitoring</title>
         <link rel="stylesheet" href="https://unpkg.com/chota@latest">
-        <link href="style.css?v=1" rel="stylesheet" type="text/css" />
+        <link href="style.css?v=2" rel="stylesheet" type="text/css" />
     </head>
     <body>
       <header>
@@ -32,7 +32,13 @@
                   <ul>
                     <li><a href="https://avonvaleriver.org" target="_blank">Avonvale River Action Group website</a></li>
                     <li><a href="https://mycloudbase.com/avonvale" target="_blank">Avonvale River Action Group monthly sampling results</a></li>
-                    <li><a href="https://smartsurvey.co.uk/s/avonalerts" target="_blank">Sign up to Avon sewage spill alerts</a></li>
+                    <li>
+                      <a href="https://smartsurvey.co.uk/s/avonalerts" target="_blank">Sign up to Avon sewage spill alerts</a>
+                      <span class="text-warning">
+                        <i>⚠️ Note: This tool checks Severn Trent's public data for reported sewage spills.
+                        It may be incomplete and should't be relied on to judge water safety.</i>
+                      </span>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -44,8 +50,8 @@
                       <tr>
                         <th>Site</th>
                         <th>E-Coli</th>
-                        <th>Coliforms</th>
                         <th>Enterococci</th>
+                        <th>Coliforms</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -103,16 +109,16 @@
                     </div>
                     <div class="col">
                         <div class="chart dashboard-card">
-                            <h3>Coliforms</h3>
-                            <canvas data-coliforms data-location="Eckington"></canvas>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="chart dashboard-card">
                             <h3>Enterococci</h3>
                             <canvas data-enterocci data-location="Eckington"></canvas>
                         </div>
                     </div>
+                    <div class="col">
+                      <div class="chart dashboard-card">
+                          <h3>Coliforms</h3>
+                          <canvas data-coliforms data-location="Eckington"></canvas>
+                      </div>
+                  </div>
                 </div>
             </section>
             <section>
@@ -127,16 +133,16 @@
                     </div>
                     <div class="col">
                         <div class="chart dashboard-card">
-                            <h3>Coliforms</h3>
-                            <canvas data-coliforms data-location="Fladbury"></canvas>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="chart dashboard-card">
                             <h3>Enterococci</h3>
                             <canvas data-enterocci data-location="Fladbury"></canvas>
                         </div>
                     </div>
+                    <div class="col">
+                      <div class="chart dashboard-card">
+                          <h3>Coliforms</h3>
+                          <canvas data-coliforms data-location="Fladbury"></canvas>
+                      </div>
+                  </div>
                 </div>
             </section>
             <section>
@@ -151,16 +157,16 @@
                     </div>
                     <div class="col">
                         <div class="chart dashboard-card">
-                            <h3>Coliforms</h3>
-                            <canvas data-coliforms data-location="Bidford"></canvas>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="chart dashboard-card">
                             <h3>Enterococci</h3>
                             <canvas data-enterocci data-location="Bidford"></canvas>
                         </div>
                     </div>
+                    <div class="col">
+                      <div class="chart dashboard-card">
+                          <h3>Coliforms</h3>
+                          <canvas data-coliforms data-location="Bidford"></canvas>
+                      </div>
+                  </div>
                 </div>
             </section>
         </div>
@@ -192,153 +198,145 @@
           };
 
           document.addEventListener('DOMContentLoaded', () => {
-          const rows = document.querySelectorAll('table tbody tr');
+            const rows = document.querySelectorAll('table tbody tr');
 
-          rows.forEach(row => {
-            const siteName = row.cells[0].textContent.trim();
-            const siteData = bacteriaData[siteName];
+            rows.forEach(row => {
+              const siteName = row.cells[0].textContent.trim();
+              const siteData = bacteriaData[siteName];
 
-            if (siteData) {
-              row.cells[1].textContent = siteData.ecoli[0] === belowThreshold
-                ? '<10'
-                : siteData.ecoli[0] === aboveThreshold
-                  ? '>1000'
-                  : siteData.ecoli[0] ?? '-';
+              if (siteData) {
+                const ec = siteData.ecoli[0];
+                const co = siteData.coliforms[0];
+                const ie = siteData.enterococci[0];
 
-              row.cells[2].textContent = siteData.coliforms[0] === belowThreshold
-                ? '<10'
-                : siteData.coliforms[0] === aboveThreshold
-                  ? '>1000'
-                  : siteData.coliforms[0] ?? '-';
+                // E. coli cell
+                row.cells[1].textContent =
+                  ec === belowThreshold ? '<10' :
+                  ec === aboveThreshold ? '>1000' :
+                  ec ?? '-';
 
-              row.cells[3].textContent = siteData.enterococci[0] === belowThreshold
-                ? '<10'
-                : siteData.enterococci[0] === aboveThreshold
-                  ? '>1000'
-                  : siteData.enterococci[0] ?? '-';
+                const ecClass =
+                  ec <= 500 ? 'excellent' :
+                  ec <= 900 ? 'sufficient' :
+                  ec <= 1000 ? 'good' :
+                  ec != null ? 'poor' :
+                  'unknown';
 
-              const classification = getClassification(siteData.ecoli[0], siteData.enterococci[0]);
-              row.classList.add(`colour--${classification}-light`);
-                
+                row.cells[1].classList.add(`colour--${ecClass}-light`);
+
+                // Coliforms cell (no colouring)
+                row.cells[3].textContent =
+                  co === belowThreshold ? '<10' :
+                  co === aboveThreshold ? '>1000' :
+                  co ?? '-';
+
+                // Enterococci cell
+                row.cells[2].textContent =
+                  ie === belowThreshold ? '<10' :
+                  ie === aboveThreshold ? '>1000' :
+                  ie ?? '-';
+
+                const ieClass =
+                  ie <= 200 ? 'excellent' :
+                  ie <= 330 ? 'sufficient' :
+                  ie <= 400 ? 'good' :
+                  ie != null ? 'poor' :
+                  'unknown';
+
+                row.cells[2].classList.add(`colour--${ieClass}-light`);
+
               } else {
-                // If site not found in data
+                // Site not found
                 row.cells[1].textContent = '-';
                 row.cells[2].textContent = '-';
                 row.cells[3].textContent = '-';
               }
             });
-          });
+        
+            function renderCharts() {
+              const chartConfigs = [
+                { 
+                  attr: "data-ecoli", 
+                  key: "ecoli", 
+                  label: "E-Coli CFU/100ml", 
+                  color: "#EE5D9F",
+                  thresholds: [500, 900, 1000]
+                },
+                { 
+                  attr: "data-coliforms", 
+                  key: "coliforms", 
+                  label: "Coliforms CFU/100ml", 
+                  color: "#5B8DEF" 
+                },
+                { 
+                  attr: "data-enterocci", 
+                  key: "enterococci", 
+                  label: "Enterococci CFU/100ml", 
+                  color: "#6EDCB4",
+                  thresholds: [200, 330, 400]
+                },
+              ];
 
-          function getClassification(ec, ie) {
-            // If either value is missing, classify as "poor"
-            if (ec == null || ie == null) return 'unknown';
+              chartConfigs.forEach(({ attr, key, label, color, thresholds }) => {
+                document.querySelectorAll(`[${attr}]`).forEach(canvas => {
+                  const location = canvas.getAttribute('data-location');
+                  const locationData = bacteriaData[location];
+                  if (!locationData) return;
 
-            const ecClass =
-              ec <= 500 ? 'excellent' :
-              ec <= 900 ? 'sufficient' :
-              ec <= 1000 ? 'good' :
-              'poor';
+                  // Build annotation lines if thresholds exist
+                  const annotations = thresholds?.map((value, i) => ({
+                    type: 'line',
+                    yMin: value,
+                    yMax: value,
+                    borderColor: ['#2ecc71', '#f1c40f', '#e67e22'][i],
+                    borderWidth: 2,
+                    borderDash: [6, 6],
+                    label: {
+                      content: ['Excellent', 'Good', 'Sufficient'][i],
+                      enabled: false,
+                      color: 'black',
+                    }
+                  })) || [];
 
-            console.log("ex class", ec, ecClass)
-
-            const ieClass =
-              ie <= 200 ? 'excellent' :
-              ie <= 330 ? 'sufficient' :
-              ie <= 400 ? 'good' :
-              'poor';
-
-            console.log("ie class", ie, ieClass)
-
-            // Convert classification to a score to get the worst one
-            const rank = { 'excellent': 1, 'good': 2, 'sufficient': 3, 'poor': 4 };
-            const worst = rank[ecClass] > rank[ieClass] ? ecClass : ieClass;
-
-            return worst;
-          }
-      
-          function renderCharts() {
-            const chartConfigs = [
-              { 
-                attr: "data-ecoli", 
-                key: "ecoli", 
-                label: "E-Coli CFU/100ml", 
-                color: "#EE5D9F",
-                thresholds: [500, 900, 1000]
-              },
-              { 
-                attr: "data-coliforms", 
-                key: "coliforms", 
-                label: "Coliforms CFU/100ml", 
-                color: "#5B8DEF" 
-              },
-              { 
-                attr: "data-enterocci", 
-                key: "enterococci", 
-                label: "Enterococci CFU/100ml", 
-                color: "#6EDCB4",
-                thresholds: [200, 330, 400]
-              },
-            ];
-
-            chartConfigs.forEach(({ attr, key, label, color, thresholds }) => {
-              document.querySelectorAll(`[${attr}]`).forEach(canvas => {
-                const location = canvas.getAttribute('data-location');
-                const locationData = bacteriaData[location];
-                if (!locationData) return;
-
-                // Build annotation lines if thresholds exist
-                const annotations = thresholds?.map((value, i) => ({
-                  type: 'line',
-                  yMin: value,
-                  yMax: value,
-                  borderColor: ['#2ecc71', '#f1c40f', '#e67e22'][i],
-                  borderWidth: 2,
-                  borderDash: [6, 6],
-                  label: {
-                    content: ['Excellent', 'Good', 'Sufficient'][i],
-                    enabled: false,
-                    color: 'black',
-                  }
-                })) || [];
-
-                new Chart(canvas, {
-                  type: 'bar',
-                  data: {
-                    labels: locationData.labels,
-                    datasets: [{
-                      label,
-                      data: locationData[key],
-                      borderWidth: 1,
-                      backgroundColor: color,
-                      maxBarThickness: 100
-                    }]
-                  },
-                  options: {
-                    scales: {
-                      y: {
-                        beginAtZero: true,
-                        title: {
-                          display: true,
-                          text: 'CFU/100ml'
-                        },
-                      }
+                  new Chart(canvas, {
+                    type: 'bar',
+                    data: {
+                      labels: locationData.labels,
+                      datasets: [{
+                        label,
+                        data: locationData[key],
+                        borderWidth: 1,
+                        backgroundColor: color,
+                        maxBarThickness: 100
+                      }]
                     },
-                    borderRadius: 4,
-                    plugins: {
-                      legend: {
-                        display: false
+                    options: {
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                          title: {
+                            display: true,
+                            text: 'CFU/100ml'
+                          },
+                        }
                       },
-                      annotation: {
-                        annotations: Object.fromEntries(annotations.map((a, i) => [`line${i}`, a]))
+                      borderRadius: 4,
+                      plugins: {
+                        legend: {
+                          display: false
+                        },
+                        annotation: {
+                          annotations: Object.fromEntries(annotations.map((a, i) => [`line${i}`, a]))
+                        }
                       }
                     }
-                  }
+                  });
                 });
               });
-            });
-          }
+            }
         
-          renderCharts();
+            renderCharts();
+          });
         </script>
     </body>
 </html>

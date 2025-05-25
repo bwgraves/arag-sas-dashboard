@@ -170,3 +170,8 @@ table {
 .colour--poor-light {
     background-color: #e74c3c;
 }
+
+.text-warning {
+    font-size:90%;
+    text-decoration: italics;
+}
